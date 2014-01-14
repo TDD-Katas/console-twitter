@@ -16,10 +16,10 @@ public class ConsoleTwitterFixture {
     /**
      * Simulate a console input and return output
      * @param time
-     * @param line
+     * @param command
      * @return 
      */
-    public String submitCommand(String time, String line) {
+    public String submitCommand(String time, String command) {
         return "";
     }
 }

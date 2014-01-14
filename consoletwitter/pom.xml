@@ -145,7 +145,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>ro.ghionoiu.twitter.ConsoleTwitter</mainClass>
+                    <mainClass>ro.ghionoiu.twitter.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

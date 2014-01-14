@@ -1,18 +1,23 @@
 package ro.ghionoiu.twitter;
 
-import java.io.Console;
+import ro.ghionoiu.twitter.input.SystemConsoleInput;
 
 /**
  * Hello world!
  *
  */
 public class ConsoleTwitter {
+    private InputChannel consoleInput;
 
-    public static void main(String[] args) {
-        Console console = System.console();
-        String username = console.readLine("Name?\n");
+    public ConsoleTwitter(InputChannel consoleInput) {
+        this.consoleInput = consoleInput;
+    }
 
-        console.printf("Welcome, %1$s.\n", username);
-        console.printf("Bye.\n");
+    public ConsoleTwitter() {
+        consoleInput = new SystemConsoleInput();
+    }
+
+    public void start() {
+        consoleInput.readCommand();
     }
 }

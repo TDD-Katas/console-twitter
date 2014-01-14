@@ -5,17 +5,22 @@
 package ro.ghionoiu.twitter;
 
 import org.junit.Test;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class ConsoleTwitterTest {
+    
     @Test
-    public void testMain() {
-        assertThat(true, is(true));
+    public void applicationReadsFromInputChannel() {
+        InputChannel mockInputChannel = mock(InputChannel.class);
+        ConsoleTwitter consoleTwitter = new ConsoleTwitter(mockInputChannel);
+        consoleTwitter.start();
+        
+        verify(mockInputChannel,times(1)).readCommand();
     }
 }

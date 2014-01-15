@@ -7,21 +7,25 @@ import ro.ghionoiu.twitter.input.SystemConsoleInput;
  * Hello world!
  *
  */
-public class TwitterServer {
+public class Server {
     private InputChannel inputChannnel;
-
-    public TwitterServer(InputChannel inputChannel) {
+    private Engine engine;
+    
+    protected Server(InputChannel inputChannel, Engine engine) {
         this.inputChannnel = inputChannel;
+        this.engine = engine;
     }
 
-    public TwitterServer() {
+    public Server() {
         inputChannnel = new SystemConsoleInput();
+        engine = null;
     }
 
     public void start() {
         String command;
         do {
             command = inputChannnel.readCommand();
+            engine.processCommand(command);
         } while (command != null);
     }
 }

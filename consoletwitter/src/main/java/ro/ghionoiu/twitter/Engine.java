@@ -8,9 +8,10 @@ package ro.ghionoiu.twitter;
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
-public class ConsoleTwitter {
-    public static void main(String[] args) {
-        Server consoleTwitter = new Server();
-        consoleTwitter.start();
+public class Engine {
+    
+    
+    public void processCommand(String command) {
+        
     }
 }

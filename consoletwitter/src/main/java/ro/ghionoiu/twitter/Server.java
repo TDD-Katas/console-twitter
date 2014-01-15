@@ -29,7 +29,11 @@ public class Server {
         String command;
         do {
             command = inputChannnel.readCommand();
-            engine.processCommand(command);
-        } while (command != null);
+            if (command != null) {
+                engine.processCommand(command);
+            } else {
+                break;
+            }
+        } while (true);
     }
 }

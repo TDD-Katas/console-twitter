@@ -18,6 +18,9 @@ public class ConsoleTwitter {
     }
 
     public void start() {
-        consoleInput.readCommand();
+        String command;
+        do {
+            command = consoleInput.readCommand();
+        } while(command != null);
     }
 }

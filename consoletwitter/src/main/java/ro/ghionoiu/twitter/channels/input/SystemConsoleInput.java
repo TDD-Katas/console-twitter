@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.ghionoiu.twitter.input;
+package ro.ghionoiu.twitter.channels.input;
 
+import ro.ghionoiu.twitter.channels.InputChannel;
 import java.io.Console;
 
 /**
@@ -14,7 +15,7 @@ public class SystemConsoleInput implements InputChannel {
     private Console console;
 
     public SystemConsoleInput() {
-        this.console = System.console();
+        console = System.console();
     }
 
     @Override

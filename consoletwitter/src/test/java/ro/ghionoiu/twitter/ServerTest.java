@@ -5,7 +5,7 @@
 package ro.ghionoiu.twitter;
 
 import java.util.Arrays;
-import ro.ghionoiu.twitter.input.InputChannel;
+import ro.ghionoiu.twitter.channels.InputChannel;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;

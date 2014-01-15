@@ -1,7 +1,7 @@
 package ro.ghionoiu.twitter;
 
-import ro.ghionoiu.twitter.input.InputChannel;
-import ro.ghionoiu.twitter.input.SystemConsoleInput;
+import ro.ghionoiu.twitter.channels.InputChannel;
+import ro.ghionoiu.twitter.channels.input.SystemConsoleInput;
 
 /**
  * Hello world!
@@ -10,6 +10,8 @@ import ro.ghionoiu.twitter.input.SystemConsoleInput;
 public class Server {
     private InputChannel inputChannnel;
     private Engine engine;
+    
+    //~~~~~~~ Construct
     
     protected Server(InputChannel inputChannel, Engine engine) {
         this.inputChannnel = inputChannel;
@@ -21,6 +23,8 @@ public class Server {
         engine = null;
     }
 
+    //~~~~~~~ Run
+    
     public void start() {
         String command;
         do {

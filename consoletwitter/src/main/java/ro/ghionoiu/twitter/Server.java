@@ -20,7 +20,7 @@ public class Server {
 
     public Server() {
         inputChannnel = new SystemConsoleInput();
-        engine = null;
+        engine = new Engine();
     }
 
     //~~~~~~~ Run

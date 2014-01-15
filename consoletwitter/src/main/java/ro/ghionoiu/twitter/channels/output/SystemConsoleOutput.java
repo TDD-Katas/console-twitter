@@ -20,6 +20,6 @@ public class SystemConsoleOutput implements OutputChannel {
 
     @Override
     public void writeMessage(String message) {
-        console.printf("%1$s", message);
+        console.printf("%1$s\n", message);
     }
 }

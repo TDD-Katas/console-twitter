@@ -4,7 +4,6 @@
  */
 package ro.ghionoiu.twitter.input;
 
-import ro.ghionoiu.twitter.InputChannel;
 import java.io.Console;
 
 /**

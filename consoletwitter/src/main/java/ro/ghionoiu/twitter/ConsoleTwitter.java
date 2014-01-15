@@ -7,20 +7,20 @@ import ro.ghionoiu.twitter.input.SystemConsoleInput;
  *
  */
 public class ConsoleTwitter {
-    private InputChannel consoleInput;
+    private InputChannel inputChannnel;
 
-    public ConsoleTwitter(InputChannel consoleInput) {
-        this.consoleInput = consoleInput;
+    public ConsoleTwitter(InputChannel inputChannel) {
+        this.inputChannnel = inputChannel;
     }
 
     public ConsoleTwitter() {
-        consoleInput = new SystemConsoleInput();
+        inputChannnel = new SystemConsoleInput();
     }
 
     public void start() {
         String command;
         do {
-            command = consoleInput.readCommand();
-        } while(command != null);
+            command = inputChannnel.readCommand();
+        } while (command != null);
     }
 }

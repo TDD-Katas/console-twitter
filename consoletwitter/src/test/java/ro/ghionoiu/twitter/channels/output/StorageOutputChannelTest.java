@@ -17,7 +17,7 @@ public class StorageOutputChannelTest {
     private static final String EMPTY = "";
     
     @Test
-    public void record_received_messages() {
+    public void will_store_received_messages() {
         StorageOutputChannel instance = new StorageOutputChannel();
         
         instance.writeMessage(SOME_MESSAGE);
@@ -26,7 +26,7 @@ public class StorageOutputChannelTest {
     }
     
     @Test
-    public void reset_clears_the_storage() {
+    public void reset_wil_clear_the_storage() {
         StorageOutputChannel instance = new StorageOutputChannel();
         instance.writeMessage(SOME_MESSAGE);
         

@@ -9,5 +9,5 @@ package ro.ghionoiu.twitter.channels;
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public interface InputChannel {
-    String readCommand();
+    String readLine();
 }

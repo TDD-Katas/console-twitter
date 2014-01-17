@@ -28,7 +28,7 @@ public class Server {
     public void start() {
         String command;
         do {
-            command = inputChannnel.readCommand();
+            command = inputChannnel.readLine();
             if (command != null) {
                 engine.processCommand(command);
             } else {

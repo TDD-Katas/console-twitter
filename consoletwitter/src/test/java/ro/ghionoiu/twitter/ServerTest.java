@@ -21,13 +21,13 @@ public class ServerTest {
     private static final String EOF = (String) null;
     
     @Test
-    public void reads_commands_from_input_channel() {
+    public void reads_lines_from_input_channel() {
         InputChannel mockInputChannel = mockInputChannel(EOF);
         Engine engine = mock(Engine.class);
         
         startServerUsing(mockInputChannel, engine);
         
-        verify(mockInputChannel,times(1)).readCommand();
+        verify(mockInputChannel,times(1)).readLine();
     }
     
     
@@ -38,11 +38,11 @@ public class ServerTest {
         
         startServerUsing(mockInputChannel, engine);
         
-        verify(mockInputChannel,times(2)).readCommand();
+        verify(mockInputChannel,times(2)).readLine();
     }
     
     @Test
-    public void forwards_commands_to_engine() {
+    public void forwards_read_lines_to_engine() {
         InputChannel mockInputChannel = mockInputChannel(SOME_COMMAND, EOF);
         Engine engine = mock(Engine.class);
         
@@ -57,7 +57,7 @@ public class ServerTest {
         InputChannel mockInputChannel = mock(InputChannel.class);
         String firstInput = inputs[0];
         String[] restOfInputs = Arrays.copyOfRange(inputs, 1, inputs.length);
-        when(mockInputChannel.readCommand())
+        when(mockInputChannel.readLine())
                 .thenReturn(firstInput, restOfInputs);
         return mockInputChannel;
     }

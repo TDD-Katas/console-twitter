@@ -19,7 +19,7 @@ public class SystemConsoleInput implements InputChannel {
     }
 
     @Override
-    public String readCommand() {
+    public String readLine() {
         return console.readLine(">");
     }
 }

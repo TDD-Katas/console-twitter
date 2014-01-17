@@ -20,7 +20,7 @@ public class ArrayBasedInputChannel implements InputChannel {
     }
 
     @Override
-    public String readCommand() {
+    public String readLine() {
         if (inputIterator.hasNext()) {
             return inputIterator.next();
         } else {

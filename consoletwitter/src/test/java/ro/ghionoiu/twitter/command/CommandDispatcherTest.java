@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.ghionoiu.twitter;
+package ro.ghionoiu.twitter.command;
 
 import org.junit.Test;
 import ro.ghionoiu.twitter.channels.OutputChannel;
@@ -11,7 +11,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
-import ro.ghionoiu.twitter.command.CommandHandler;
 
 /**
  *

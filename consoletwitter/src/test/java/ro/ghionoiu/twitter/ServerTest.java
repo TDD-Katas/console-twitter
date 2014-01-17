@@ -4,6 +4,7 @@
  */
 package ro.ghionoiu.twitter;
 
+import ro.ghionoiu.twitter.command.CommandDispatcher;
 import java.util.Arrays;
 import ro.ghionoiu.twitter.channels.InputChannel;
 import org.junit.Test;

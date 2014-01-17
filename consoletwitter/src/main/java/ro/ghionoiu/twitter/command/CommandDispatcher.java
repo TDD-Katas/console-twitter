@@ -25,7 +25,7 @@ public class CommandDispatcher {
 
     public CommandDispatcher() {
         outputChannel = new SystemConsoleOutput();
-        backend = new Backend();
+        backend = new Backend(outputChannel);
         commandHandlers= new CommandHandler[]{
             new PostCommandHandler(backend),
             new FollowCommandHandler(),

@@ -17,39 +17,36 @@ import ro.ghionoiu.twitter.commands.CommandHandler;
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
-public class EngineTest {
+public class CommandDispatcherTest {
     public static final String SOME_COMMAND = "test command";
     
     @Test
     public void sends_command_to_handler_that_can_handle_it() {
-        String command = SOME_COMMAND;
-        CommandHandler matchingHandler = capableHandler();
-        CommandHandler[] handlers = new CommandHandler[]{matchingHandler};
+        CommandHandler capableHandler = capableHandler();
+        CommandDispatcher instance = createInstance(capableHandler);
         
-        processCommand(handlers, command);
+        instance.processCommand(SOME_COMMAND);
         
-        verify(matchingHandler).processCommand(SOME_COMMAND);
+        verify(capableHandler).processCommand(SOME_COMMAND);
     }
     
     @Test
     public void do_not_send_command_to_handler_that_cannot_handle_it() {
-        String command = SOME_COMMAND;
         CommandHandler uncapableHandler = uncapableHandler();
-        CommandHandler[] handlers = new CommandHandler[]{uncapableHandler};
+        CommandDispatcher instance = createInstance(uncapableHandler);
         
-        processCommand(handlers, command);
+        instance.processCommand(SOME_COMMAND);
         
         verify(uncapableHandler,never()).processCommand(SOME_COMMAND);
     }
     
     @Test
     public void sends_command_to_first_handler_that_can_handle_it() {
-        String command = SOME_COMMAND;
         CommandHandler firstHandler = capableHandler();
         CommandHandler secondHandler = capableHandler();
-        CommandHandler[] handlers = new CommandHandler[]{firstHandler, secondHandler};
+        CommandDispatcher instance = createInstance(firstHandler, secondHandler);
         
-        processCommand(handlers, command);
+        instance.processCommand(SOME_COMMAND);
         
         verify(firstHandler).processCommand(SOME_COMMAND);
         verify(secondHandler,never()).processCommand(SOME_COMMAND);
@@ -58,23 +55,12 @@ public class EngineTest {
     @Test
     public void sends_command_to_output_channel() {
         OutputChannel outputChannel = mock(OutputChannel.class);
-        Engine engine = new Engine();
-        engine.setOutputChannel(outputChannel);
+        CommandDispatcher instance = new CommandDispatcher();
+        instance.setOutputChannel(outputChannel);
         
-        engine.processCommand(SOME_COMMAND);
+        instance.processCommand(SOME_COMMAND);
         
         verify(outputChannel).writeMessage(SOME_COMMAND);
-    }
-    
-    //~~~~~~ Production method
-
-    protected void processCommand(CommandHandler[] handlers, String command) {
-        for (CommandHandler commandHandler : handlers) {
-            if (commandHandler.canHandle(command)) {
-                commandHandler.processCommand(command);
-                break;
-            }
-        }
     }
     
     //~~~~~~ Test helpers
@@ -92,5 +78,12 @@ public class EngineTest {
         when(nonCapableHandler.canHandle(any(String.class)))
                 .thenReturn(canHandleStrings);
         return nonCapableHandler;
+    }
+
+    protected CommandDispatcher createInstance(CommandHandler ... handlers) {
+        CommandDispatcher instance = new CommandDispatcher();
+        instance.setOutputChannel(mock(OutputChannel.class));
+        instance.setCommandHandlers(handlers);
+        return instance;
     }
 }

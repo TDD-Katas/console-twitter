@@ -9,21 +9,21 @@ import ro.ghionoiu.twitter.channels.input.SystemConsoleInput;
  */
 public class Server {
     private InputChannel inputChannnel;
-    private Engine engine;
+    private CommandDispatcher commandDispatcher;
     
     //~~~~~~~ Construct
     
     public Server() {
         inputChannnel = new SystemConsoleInput();
-        engine = new Engine();
+        commandDispatcher = new CommandDispatcher();
     }
 
     public void setInputChannnel(InputChannel inputChannnel) {
         this.inputChannnel = inputChannnel;
     }
 
-    public void setEngine(Engine engine) {
-        this.engine = engine;
+    public void setEngine(CommandDispatcher engine) {
+        this.commandDispatcher = engine;
     }
 
     //~~~~~~~ Run
@@ -33,7 +33,7 @@ public class Server {
         do {
             command = inputChannnel.readLine();
             if (command != null) {
-                engine.processCommand(command);
+                commandDispatcher.processCommand(command);
             } else {
                 break;
             }

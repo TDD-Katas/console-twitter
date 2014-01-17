@@ -42,7 +42,7 @@ public class ServerTest {
     @Test
     public void forwards_read_lines_to_engine() {
         InputChannel preparedInputChannel = mockInputChannel(SOME_COMMAND, EOF);
-        Engine engine = mock(Engine.class);
+        CommandDispatcher engine = mock(CommandDispatcher.class);
         
         startServerUsing(preparedInputChannel, engine);
         
@@ -61,10 +61,10 @@ public class ServerTest {
     }
 
     private void startServerUsing(InputChannel mockInputChannel) {
-        startServerUsing(mockInputChannel, mock(Engine.class));
+        startServerUsing(mockInputChannel, mock(CommandDispatcher.class));
     }
     
-    private void startServerUsing(InputChannel mockInputChannel, Engine engine) {
+    private void startServerUsing(InputChannel mockInputChannel, CommandDispatcher engine) {
         Server consoleTwitter = new Server();
         consoleTwitter.setInputChannnel(mockInputChannel);
         consoleTwitter.setEngine(engine);

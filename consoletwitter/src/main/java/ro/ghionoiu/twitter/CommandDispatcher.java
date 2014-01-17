@@ -12,14 +12,15 @@ import ro.ghionoiu.twitter.commands.CommandHandler;
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
-public class Engine {
+public class CommandDispatcher {
     private OutputChannel outputChannel;
     private CommandHandler[] commandHandlers;
 
     //~~~~~~~ Construct
 
-    public Engine() {
+    public CommandDispatcher() {
         outputChannel = new SystemConsoleOutput();
+        commandHandlers= new CommandHandler[]{};
     }
 
     public void setOutputChannel(OutputChannel outputChannel) {
@@ -33,9 +34,12 @@ public class Engine {
     //~~~~~~~ Run
     
     public void processCommand(String command) {
-        
-//        detect -> build -> execute
-//        DetectTypeOfCommand -> Command -> execute
+        for (CommandHandler commandHandler : commandHandlers) {
+            if (commandHandler.canHandle(command)) {
+                commandHandler.processCommand(command);
+                break;
+            }
+        }
         
         outputChannel.writeMessage(command);
     }

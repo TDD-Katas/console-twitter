@@ -13,14 +13,17 @@ public class Server {
     
     //~~~~~~~ Construct
     
-    protected Server(InputChannel inputChannel, Engine engine) {
-        this.inputChannnel = inputChannel;
-        this.engine = engine;
-    }
-
     public Server() {
         inputChannnel = new SystemConsoleInput();
         engine = new Engine();
+    }
+
+    public void setInputChannnel(InputChannel inputChannnel) {
+        this.inputChannnel = inputChannnel;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 
     //~~~~~~~ Run

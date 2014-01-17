@@ -8,7 +8,6 @@ import org.junit.Test;
 import ro.ghionoiu.twitter.channels.OutputChannel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -43,7 +42,8 @@ public class EngineTest {
     @Test
     public void sends_command_to_output_channel() {
         OutputChannel outputChannel = mock(OutputChannel.class);
-        Engine engine = new Engine(outputChannel);
+        Engine engine = new Engine();
+        engine.setOutputChannel(outputChannel);
         
         engine.processCommand(SOME_COMMAND);
         

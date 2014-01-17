@@ -16,13 +16,13 @@ public class Engine {
     private OutputChannel outputChannel;
 
     //~~~~~~~ Construct
-    
-    protected Engine(OutputChannel outputChannel) {
-        this.outputChannel = outputChannel;
-    }
-    
+
     public Engine() {
         outputChannel = new SystemConsoleOutput();
+    }
+
+    public void setOutputChannel(OutputChannel outputChannel) {
+        this.outputChannel = outputChannel;
     }
     
     //~~~~~~~ Run

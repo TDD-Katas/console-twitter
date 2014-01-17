@@ -16,7 +16,8 @@ public class ConsoleTwitterFixture {
      */
     public void reset() {
         outputChannel = new StorageOutputChannel();
-        engine = new Engine(outputChannel);
+        engine = new Engine();
+        engine.setOutputChannel(outputChannel);
     }
     
     /**
@@ -28,7 +29,9 @@ public class ConsoleTwitterFixture {
     public String submitCommand(String time, String command) {
         InputChannel inputChannel = new ArrayBasedInputChannel(command);
         outputChannel.reset();
-        Server server = new Server(inputChannel, engine);
+        Server server = new Server();
+        server.setInputChannnel(inputChannel);
+        server.setEngine(engine);
         
         //Start server
         server.start();

@@ -22,31 +22,29 @@ public class ServerTest {
     
     @Test
     public void reads_lines_from_input_channel() {
-        InputChannel mockInputChannel = mockInputChannel(EOF);
-        Engine engine = mock(Engine.class);
+        InputChannel preparedInputChannel = mockInputChannel(EOF);
         
-        startServerUsing(mockInputChannel, engine);
+        startServerUsing(preparedInputChannel);
         
-        verify(mockInputChannel,times(1)).readLine();
+        verify(preparedInputChannel,times(1)).readLine();
     }
     
     
     @Test
     public void exits_when_receives_eof_input() {
-        InputChannel mockInputChannel = mockInputChannel(SOME_COMMAND, EOF);
-        Engine engine = mock(Engine.class);
+        InputChannel preparedInputChannel = mockInputChannel(SOME_COMMAND, EOF);
         
-        startServerUsing(mockInputChannel, engine);
+        startServerUsing(preparedInputChannel);
         
-        verify(mockInputChannel,times(2)).readLine();
+        verify(preparedInputChannel,times(2)).readLine();
     }
     
     @Test
     public void forwards_read_lines_to_engine() {
-        InputChannel mockInputChannel = mockInputChannel(SOME_COMMAND, EOF);
+        InputChannel preparedInputChannel = mockInputChannel(SOME_COMMAND, EOF);
         Engine engine = mock(Engine.class);
         
-        startServerUsing(mockInputChannel, engine);
+        startServerUsing(preparedInputChannel, engine);
         
         verify(engine).processCommand(SOME_COMMAND);
     }
@@ -62,8 +60,14 @@ public class ServerTest {
         return mockInputChannel;
     }
 
+    private void startServerUsing(InputChannel mockInputChannel) {
+        startServerUsing(mockInputChannel, mock(Engine.class));
+    }
+    
     private void startServerUsing(InputChannel mockInputChannel, Engine engine) {
-        Server consoleTwitter = new Server(mockInputChannel, engine);
+        Server consoleTwitter = new Server();
+        consoleTwitter.setInputChannnel(mockInputChannel);
+        consoleTwitter.setEngine(engine);
         consoleTwitter.start();
     }
 }

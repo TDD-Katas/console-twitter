@@ -4,6 +4,7 @@
  */
 package ro.ghionoiu.twitter;
 
+import com.sun.corba.se.impl.activation.CommandHandler;
 import ro.ghionoiu.twitter.channels.OutputChannel;
 import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
 
@@ -27,6 +28,10 @@ public class Engine {
     //~~~~~~~ Run
     
     public void processCommand(String command) {
+        
+//        detect -> build -> execute
+//        DetectTypeOfCommand -> Command -> execute
+        
         outputChannel.writeMessage(command);
     }
 }

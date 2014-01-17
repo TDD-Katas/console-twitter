@@ -5,7 +5,7 @@
 package ro.ghionoiu.twitter.command.handlers;
 
 import ro.ghionoiu.twitter.command.CommandHandler;
-import ro.ghionoiu.twitter.storage.StorageSystem;
+import ro.ghionoiu.twitter.backend.Backend;
 
 /**
  *
@@ -15,17 +15,12 @@ public class PostCommandHandler implements CommandHandler {
     private static final String TAG = "->";
     private static final String ANY_SPACE = "\\s*";
     
-    //Members
-    private StorageSystem storageSystem;
+    private Backend backend;
 
-    public PostCommandHandler() {
-        this.storageSystem = null;
+    public PostCommandHandler(Backend backend) {
+        this.backend = backend;
     }
 
-    public void setStorageSystem(StorageSystem storageSystem) {
-        this.storageSystem = storageSystem;
-    }
-    
     @Override
     public boolean canHandle(String command) {
         boolean canHandle = false;
@@ -44,6 +39,6 @@ public class PostCommandHandler implements CommandHandler {
         if (parts.length > 1) {
             message = parts[1];
         }
-        storageSystem.storeMessageForUser(username, message);
+        backend.storeMessageForUser(username, message);
     }
 }

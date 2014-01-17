@@ -4,25 +4,26 @@
  */
 package ro.ghionoiu.twitter.command.handlers;
 
-import ro.ghionoiu.twitter.storage.StorageSystem;
+import ro.ghionoiu.twitter.backend.Backend;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import org.junit.Before;
-import ro.ghionoiu.twitter.command.CommandHandler;
 
 /**
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class PostCommandHandlerTest {
+    private Backend backend;
     private PostCommandHandler instance;
     
     @Before
     public void setUp() {
-        instance = new PostCommandHandler();
+        backend = mock(Backend.class);
+        instance = new PostCommandHandler(backend);
     }
     
     @Test
@@ -42,13 +43,11 @@ public class PostCommandHandlerTest {
     }
     
     @Test
-    public void forwards_username_and_message_to_the_storage_system() {
+    public void asks_backend_to_store_message_for_user() {
         String command = "Alice -> Hello!";
-        StorageSystem storage = mock(StorageSystem.class);
-        instance.setStorageSystem(storage);
         
         instance.processCommand(command);
         
-        verify(storage).storeMessageForUser("Alice", "Hello!");
+        verify(backend).storeMessageForUser("Alice", "Hello!");
     }
 }

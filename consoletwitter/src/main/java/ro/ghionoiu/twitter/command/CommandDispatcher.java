@@ -4,9 +4,9 @@
  */
 package ro.ghionoiu.twitter.command;
 
+import ro.ghionoiu.twitter.backend.Backend;
 import ro.ghionoiu.twitter.channels.OutputChannel;
 import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
-import ro.ghionoiu.twitter.command.CommandHandler;
 import ro.ghionoiu.twitter.command.handlers.FollowCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.PostCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.ReadCommandHandler;
@@ -18,17 +18,19 @@ import ro.ghionoiu.twitter.command.handlers.WallCommandHandler;
  */
 public class CommandDispatcher {
     private OutputChannel outputChannel;
+    private Backend backend;
     private CommandHandler[] commandHandlers;
 
     //~~~~~~~ Construct
 
     public CommandDispatcher() {
         outputChannel = new SystemConsoleOutput();
+        backend = new Backend();
         commandHandlers= new CommandHandler[]{
-            new PostCommandHandler(),
+            new PostCommandHandler(backend),
             new FollowCommandHandler(),
             new WallCommandHandler(),
-            new ReadCommandHandler()
+            new ReadCommandHandler(backend)
         };
     }
 

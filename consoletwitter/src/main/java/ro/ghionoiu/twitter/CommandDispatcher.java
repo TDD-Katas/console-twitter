@@ -6,7 +6,7 @@ package ro.ghionoiu.twitter;
 
 import ro.ghionoiu.twitter.channels.OutputChannel;
 import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
-import ro.ghionoiu.twitter.commands.CommandHandler;
+import ro.ghionoiu.twitter.command.CommandHandler;
 
 /**
  *

@@ -8,7 +8,7 @@ import ro.ghionoiu.twitter.channels.output.StorageOutputChannel;
 
 @RunWith(ConcordionRunner.class)
 public class ConsoleTwitterFixture {
-    private CommandDispatcher engine;
+    private CommandDispatcher dispatcher;
     private StorageOutputChannel outputChannel;
     
     /**
@@ -16,8 +16,8 @@ public class ConsoleTwitterFixture {
      */
     public void reset() {
         outputChannel = new StorageOutputChannel();
-        engine = new CommandDispatcher();
-        engine.setOutputChannel(outputChannel);
+        dispatcher = new CommandDispatcher();
+        dispatcher.setOutputChannel(outputChannel);
     }
     
     /**
@@ -31,7 +31,7 @@ public class ConsoleTwitterFixture {
         outputChannel.reset();
         Server server = new Server();
         server.setInputChannnel(inputChannel);
-        server.setEngine(engine);
+        server.setEngine(dispatcher);
         
         //Start server
         server.start();

@@ -11,7 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
-import ro.ghionoiu.twitter.commands.CommandHandler;
+import ro.ghionoiu.twitter.command.CommandHandler;
 
 /**
  *
@@ -23,7 +23,7 @@ public class CommandDispatcherTest {
     @Test
     public void sends_command_to_handler_that_can_handle_it() {
         CommandHandler capableHandler = capableHandler();
-        CommandDispatcher instance = createInstance(capableHandler);
+        CommandDispatcher instance = createDispatcher(capableHandler);
         
         instance.processCommand(SOME_COMMAND);
         
@@ -33,7 +33,7 @@ public class CommandDispatcherTest {
     @Test
     public void do_not_send_command_to_handler_that_cannot_handle_it() {
         CommandHandler uncapableHandler = uncapableHandler();
-        CommandDispatcher instance = createInstance(uncapableHandler);
+        CommandDispatcher instance = createDispatcher(uncapableHandler);
         
         instance.processCommand(SOME_COMMAND);
         
@@ -44,7 +44,7 @@ public class CommandDispatcherTest {
     public void sends_command_to_first_handler_that_can_handle_it() {
         CommandHandler firstHandler = capableHandler();
         CommandHandler secondHandler = capableHandler();
-        CommandDispatcher instance = createInstance(firstHandler, secondHandler);
+        CommandDispatcher instance = createDispatcher(firstHandler, secondHandler);
         
         instance.processCommand(SOME_COMMAND);
         
@@ -80,7 +80,7 @@ public class CommandDispatcherTest {
         return nonCapableHandler;
     }
 
-    protected CommandDispatcher createInstance(CommandHandler ... handlers) {
+    protected CommandDispatcher createDispatcher(CommandHandler ... handlers) {
         CommandDispatcher instance = new CommandDispatcher();
         instance.setOutputChannel(mock(OutputChannel.class));
         instance.setCommandHandlers(handlers);

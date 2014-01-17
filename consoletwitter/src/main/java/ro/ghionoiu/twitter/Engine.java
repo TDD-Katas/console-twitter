@@ -4,9 +4,9 @@
  */
 package ro.ghionoiu.twitter;
 
-import com.sun.corba.se.impl.activation.CommandHandler;
 import ro.ghionoiu.twitter.channels.OutputChannel;
 import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
+import ro.ghionoiu.twitter.commands.CommandHandler;
 
 /**
  *
@@ -14,6 +14,7 @@ import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
  */
 public class Engine {
     private OutputChannel outputChannel;
+    private CommandHandler[] commandHandlers;
 
     //~~~~~~~ Construct
 
@@ -23,6 +24,10 @@ public class Engine {
 
     public void setOutputChannel(OutputChannel outputChannel) {
         this.outputChannel = outputChannel;
+    }
+
+    public void setCommandHandlers(CommandHandler[] commandHandlers) {
+        this.commandHandlers = commandHandlers;
     }
     
     //~~~~~~~ Run

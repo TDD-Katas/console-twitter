@@ -18,63 +18,56 @@ public class DummyTest {
     public static final String KEYWORD_ARROW = "->";
     public static final String KEYWORD_FOLLOWS = "follows";
     public static final String KEYWORD_WALL = "wall";
-
-
-    
-    public static final String COMMAND_POST = "post";
-    public static final String COMMAND_FOLLOW = "follow";
-    public static final String COMMAND_WALL = "typewall";
-    public static final String COMMAND_READ = "read";
     
     @Test
     public void a_line_that_contains_keyword_arrow_is_a_post_command() {
-        assertThatCommandTypeFor("Alice -> Hello !", is(COMMAND_POST));
+        assertThatCommandTypeFor("Alice -> Hello !", is(CommandType.POST));
     }
     
     @Test
     public void a_line_that_contains_keyword_follows_is_a_follow_command() {
-        assertThatCommandTypeFor("Alice follows Bob", is(COMMAND_FOLLOW));
+        assertThatCommandTypeFor("Alice follows Bob", is(CommandType.FOLLOW));
     }
     
     @Test
     public void a_line_that_contains_keyword_wall_is_a_wall_command() {
-        assertThatCommandTypeFor("Alice wall", is(COMMAND_WALL));
+        assertThatCommandTypeFor("Alice wall", is(CommandType.WALL));
     }
     
     @Test
     public void a_line_that_contains_no_keywords_a_read_command() {
-        assertThatCommandTypeFor("Alice", is(COMMAND_READ));
+        assertThatCommandTypeFor("Alice", is(CommandType.READ));
     }
     
     //~~~~~~~~ Production methods
     
-    protected String getCommandType(String line) {
-        String command = COMMAND_READ;
-        
-        if(line.contains(KEYWORD_ARROW)) {
-            command = COMMAND_POST;
-        }
-        if(line.contains(KEYWORD_FOLLOWS)) {
-            command = COMMAND_FOLLOW;
-        }
-        if(line.contains(KEYWORD_WALL)) {
-            command = COMMAND_WALL;
-        }
-        
-        return command;
-    }
-    
-    enum CommandType {
+    private static enum CommandType {
         POST,
         FOLLOW,
         WALL,
         READ;
     }
     
+    private CommandType getCommandType(String line) {
+        CommandType command = CommandType.READ;
+        
+        if(line.contains(KEYWORD_ARROW)) {
+            command = CommandType.POST;
+        }
+        if(line.contains(KEYWORD_FOLLOWS)) {
+            command = CommandType.FOLLOW;
+        }
+        if(line.contains(KEYWORD_WALL)) {
+            command = CommandType.WALL;
+        }
+        
+        return command;
+    }
+    
     //~~~~~~~~~ Private assertions
     
-    private <T> void assertThatCommandTypeFor(String line, Matcher<String> matcher) {
-        String commandType = getCommandType(line);
+    private <T> void assertThatCommandTypeFor(String line, Matcher<CommandType> matcher) {
+        CommandType commandType = getCommandType(line);
         assertThat(commandType, matcher);
     }
 }

@@ -41,13 +41,13 @@ public class ServerTest {
     }
     
     @Test
-    public void forwards_read_lines_to_engine() {
+    public void forwards_read_lines_to_command_dispatcher() {
         InputChannel preparedInputChannel = mockInputChannel(SOME_COMMAND, EOF);
-        CommandDispatcher engine = mock(CommandDispatcher.class);
+        CommandDispatcher commandDispatcher = mock(CommandDispatcher.class);
         
-        startServerUsing(preparedInputChannel, engine);
+        startServerUsing(preparedInputChannel, commandDispatcher);
         
-        verify(engine).processCommand(SOME_COMMAND);
+        verify(commandDispatcher).processCommand(SOME_COMMAND);
     }
     
     //~~~~~~~~~~ Private helpers

@@ -20,7 +20,7 @@ public class ArrayBasedInputChannelTest {
     
     
     @Test
-    public void answers_with_inputs_from_received_array() {
+    public void answers_with_inputs_from_prepared_array() {
         InputChannel instance = new ArrayBasedInputChannel(INPUT_1,INPUT_2);
         
         assertThat(instance.readLine(), is(INPUT_1));

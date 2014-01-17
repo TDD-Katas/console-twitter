@@ -2,10 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.ghionoiu.twitter;
+package ro.ghionoiu.unsorted;
 
 import org.junit.Test;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import org.hamcrest.Matcher;
 import static org.junit.Assert.assertThat;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertThat;
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
-public class DummyTest {
+public class MessageTypeTest {
     public static final String KEYWORD_ARROW = "->";
     public static final String KEYWORD_FOLLOWS = "follows";
     public static final String KEYWORD_WALL = "wall";
@@ -35,7 +34,7 @@ public class DummyTest {
     }
     
     @Test
-    public void a_line_that_contains_no_keywords_a_read_command() {
+    public void a_line_that_contains_no_keywords_is_a_read_command() {
         assertThatCommandTypeFor("Alice", is(CommandType.READ));
     }
     
@@ -49,25 +48,25 @@ public class DummyTest {
     }
     
     private CommandType getCommandType(String line) {
-        CommandType command = CommandType.READ;
+        CommandType type = CommandType.READ;
         
         if(line.contains(KEYWORD_ARROW)) {
-            command = CommandType.POST;
+            type = CommandType.POST;
         }
         if(line.contains(KEYWORD_FOLLOWS)) {
-            command = CommandType.FOLLOW;
+            type = CommandType.FOLLOW;
         }
         if(line.contains(KEYWORD_WALL)) {
-            command = CommandType.WALL;
+            type = CommandType.WALL;
         }
         
-        return command;
+        return type;
     }
     
     //~~~~~~~~~ Private assertions
     
     private <T> void assertThatCommandTypeFor(String line, Matcher<CommandType> matcher) {
-        CommandType commandType = getCommandType(line);
-        assertThat(commandType, matcher);
+        CommandType type = getCommandType(line);
+        assertThat(type, matcher);
     }
 }

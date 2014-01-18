@@ -11,11 +11,11 @@ import ro.ghionoiu.twitter.channels.OutputChannel;
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
-public class Timeline extends LinkedList<String>{
+public class Timeline extends LinkedList<Message>{
 
     public void displayTo(OutputChannel outputChannel) {
-        for (String message : this) {
-            outputChannel.writeMessage(message);
+        for (Message message : this) {
+            outputChannel.writeMessage(message.getContent());
         }
     }
 }

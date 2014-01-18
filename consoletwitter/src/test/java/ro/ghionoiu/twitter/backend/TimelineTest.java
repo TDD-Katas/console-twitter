@@ -15,21 +15,21 @@ import static org.mockito.Mockito.verify;
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class TimelineTest {
-    public static final String SOME_MESSAGE = "message1";
-    public static final String OTHER_MESSAGE = "message2";
+    public static final Message SOME_MESSAGE = new Message("message1");
+    public static final Message OTHER_MESSAGE = new Message("message2");
     
     @Test
     public void display_will_output_all_messages() {
         Timeline instance = new Timeline();
-        String[] messages = new String[] { 
+        Message[] messages = new Message[] { 
             SOME_MESSAGE, OTHER_MESSAGE };
         instance.addAll(Arrays.asList(messages));
         OutputChannel outputChannel = mock(OutputChannel.class);
         
         instance.displayTo(outputChannel);
         
-        for (String message : messages) {
-            verify(outputChannel).writeMessage(message);
+        for (Message message : messages) {
+            verify(outputChannel).writeMessage(message.getContent());
         }
     }
 }

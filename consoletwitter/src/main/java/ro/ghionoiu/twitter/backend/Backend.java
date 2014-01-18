@@ -26,7 +26,7 @@ public class Backend {
         this.storageMap = storageMap;
     }
     
-    public void storeMessageForUser(String user, String message) {
+    public void storeMessageForUser(String user, String plainMessage) {
         Timeline userTimeline;
         if (storageMap.containsKey(user)) {
             userTimeline = storageMap.get(user);
@@ -35,7 +35,7 @@ public class Backend {
             storageMap.put(user, userTimeline);
         }
         
-        userTimeline.add(message);
+        userTimeline.add(new Message(plainMessage));
     }
     
     public void displayTimelineFor(String user) {

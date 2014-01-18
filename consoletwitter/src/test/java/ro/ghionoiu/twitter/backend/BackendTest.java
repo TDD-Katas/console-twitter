@@ -21,7 +21,7 @@ import ro.ghionoiu.twitter.context.ApplicationContext;
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class BackendTest {
-    public static final String SOME_MESSAGE = "message";
+    public static final String SOME_PLAIN_MESSAGE = "message";
     private static final String SOME_USER = "Alice";
     
     
@@ -30,7 +30,7 @@ public class BackendTest {
         Map<String,Timeline> timelinesOfUsers = new HashMap<String, Timeline>();
         Backend instance = createInstanceWithGivenTimelineMap(timelinesOfUsers);
         
-        instance.storeMessageForUser(SOME_USER, SOME_MESSAGE);
+        instance.storeMessageForUser(SOME_USER, SOME_PLAIN_MESSAGE);
         
         assertThat("Username should have been stored in map",
                 timelinesOfUsers.containsKey(SOME_USER),is(true));
@@ -41,9 +41,9 @@ public class BackendTest {
         Timeline timeline = mock(Timeline.class);
         Backend instance = createBackendWithPreparedTimeline(timeline, SOME_USER);
         
-        instance.storeMessageForUser(SOME_USER, SOME_MESSAGE);
+        instance.storeMessageForUser(SOME_USER, SOME_PLAIN_MESSAGE);
         
-        verify(timeline).add(SOME_MESSAGE);
+        verify(timeline).add(new Message(SOME_PLAIN_MESSAGE));
     }
     
     @Test

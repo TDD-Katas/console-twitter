@@ -26,6 +26,14 @@ public class Message {
         this.content = content;
     }
 
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    public String getContent() {
+        return content;
+    }
+    
     //~~~~~~ Equals
     
     @Override
@@ -64,6 +72,6 @@ public class Message {
     public void displayTo(OutputChannel outputChannel, long currentTime) {
         String timeDifference = timeDifferenceFormater
                 .formatTimeDifference(currentTime - creationTime);
-        outputChannel.writeMessage(content+" "+timeDifference);
+        outputChannel.writeMessage(content+" "+timeDifference+"\n");
     }
 }

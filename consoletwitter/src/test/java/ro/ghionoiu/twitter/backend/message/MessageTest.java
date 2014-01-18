@@ -4,8 +4,6 @@
  */
 package ro.ghionoiu.twitter.backend.message;
 
-import ro.ghionoiu.twitter.backend.message.Message;
-import ro.ghionoiu.twitter.backend.message.TimeDifferenceFormater;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
@@ -38,7 +36,7 @@ public class MessageTest {
         
         instance.displayTo(outputChannel, SOME_TIME);
         
-        String expectedMessage = SOME_CONTENT+" "+TIME_DIFFERENCE;
+        String expectedMessage = SOME_CONTENT+" "+TIME_DIFFERENCE+"\n";
         verify(outputChannel).writeMessage(expectedMessage);
     }
 

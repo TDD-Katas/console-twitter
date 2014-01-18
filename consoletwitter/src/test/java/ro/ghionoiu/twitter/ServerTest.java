@@ -6,14 +6,15 @@ package ro.ghionoiu.twitter;
 
 import ro.ghionoiu.twitter.command.CommandDispatcher;
 import java.util.Arrays;
-import ro.ghionoiu.twitter.channels.InputChannel;
+import ro.ghionoiu.twitter.context.input.InputChannel;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import ro.ghionoiu.twitter.channels.OutputChannel;
+import ro.ghionoiu.twitter.context.output.OutputChannel;
 import ro.ghionoiu.twitter.context.ApplicationContext;
+import ro.ghionoiu.twitter.context.time.Clock;
 
 /**
  *
@@ -69,7 +70,8 @@ public class ServerTest {
     
     private void startServerUsing(InputChannel mockInputChannel, CommandDispatcher dispatcher) {
         ApplicationContext applicationContext = 
-                new ApplicationContext(mockInputChannel, mock(OutputChannel.class));
+                new ApplicationContext(mockInputChannel, 
+                mock(OutputChannel.class), mock(Clock.class));
         Server consoleTwitter = new Server(applicationContext, dispatcher);
         consoleTwitter.start();
     }

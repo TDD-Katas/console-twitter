@@ -4,8 +4,9 @@
  */
 package ro.ghionoiu.twitter.backend;
 
+import ro.ghionoiu.twitter.backend.message.Message;
 import java.util.LinkedList;
-import ro.ghionoiu.twitter.channels.OutputChannel;
+import ro.ghionoiu.twitter.context.output.OutputChannel;
 
 /**
  *
@@ -13,9 +14,9 @@ import ro.ghionoiu.twitter.channels.OutputChannel;
  */
 public class Timeline extends LinkedList<Message>{
 
-    public void displayTo(OutputChannel outputChannel) {
+    public void displayTo(OutputChannel outputChannel, long currentTime) {
         for (Message message : this) {
-            outputChannel.writeMessage(message.getContent());
+            message.displayTo(outputChannel, currentTime);
         }
     }
 }

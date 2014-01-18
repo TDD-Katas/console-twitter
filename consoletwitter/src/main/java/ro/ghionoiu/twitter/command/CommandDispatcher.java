@@ -5,8 +5,6 @@
 package ro.ghionoiu.twitter.command;
 
 import ro.ghionoiu.twitter.backend.Backend;
-import ro.ghionoiu.twitter.channels.OutputChannel;
-import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
 import ro.ghionoiu.twitter.command.handlers.FollowCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.PostCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.ReadCommandHandler;

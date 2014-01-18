@@ -6,13 +6,13 @@ package ro.ghionoiu.twitter.command;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import ro.ghionoiu.twitter.channels.OutputChannel;
+import ro.ghionoiu.twitter.context.output.OutputChannel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
-import ro.ghionoiu.twitter.channels.InputChannel;
+import ro.ghionoiu.twitter.context.input.InputChannel;
 import ro.ghionoiu.twitter.context.ApplicationContext;
 
 /**

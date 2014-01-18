@@ -4,8 +4,9 @@
  */
 package ro.ghionoiu.twitter.context;
 
-import ro.ghionoiu.twitter.channels.InputChannel;
-import ro.ghionoiu.twitter.channels.OutputChannel;
+import ro.ghionoiu.twitter.context.time.Clock;
+import ro.ghionoiu.twitter.context.input.InputChannel;
+import ro.ghionoiu.twitter.context.output.OutputChannel;
 
 /**
  *
@@ -14,12 +15,15 @@ import ro.ghionoiu.twitter.channels.OutputChannel;
 public class ApplicationContext {
     private InputChannel inputChannnel;
     private OutputChannel outputChannel;
+    private Clock clock;
 
     public ApplicationContext(
             InputChannel inputChannnel, 
-            OutputChannel outputChannel) {
+            OutputChannel outputChannel,
+            Clock clock) {
         this.inputChannnel = inputChannnel;
         this.outputChannel = outputChannel;
+        this.clock = clock;
     }
 
     public InputChannel getInputChannnel() {
@@ -28,5 +32,9 @@ public class ApplicationContext {
 
     public OutputChannel getOutputChannel() {
         return outputChannel;
+    }
+
+    public Clock getClock() {
+        return clock;
     }
 }

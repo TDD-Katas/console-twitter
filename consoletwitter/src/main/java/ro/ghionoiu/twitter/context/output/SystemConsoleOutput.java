@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.ghionoiu.twitter.channels.output;
+package ro.ghionoiu.twitter.context.output;
 
-import ro.ghionoiu.twitter.channels.OutputChannel;
 import java.io.Console;
 
 /**

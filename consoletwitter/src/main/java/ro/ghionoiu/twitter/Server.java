@@ -1,9 +1,10 @@
 package ro.ghionoiu.twitter;
 
 import ro.ghionoiu.twitter.command.CommandDispatcher;
-import ro.ghionoiu.twitter.channels.input.SystemConsoleInput;
-import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
+import ro.ghionoiu.twitter.context.input.SystemConsoleInput;
+import ro.ghionoiu.twitter.context.output.SystemConsoleOutput;
 import ro.ghionoiu.twitter.context.ApplicationContext;
+import ro.ghionoiu.twitter.context.time.RealClock;
 
 /**
  * Hello world!
@@ -18,7 +19,8 @@ public class Server {
     public Server() {
         this(new ApplicationContext(
                 new SystemConsoleInput(), 
-                new SystemConsoleOutput()));
+                new SystemConsoleOutput(),
+                new RealClock()));
     }
     
     public Server(ApplicationContext applicationContext) {

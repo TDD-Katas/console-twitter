@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.ghionoiu.twitter.channels.output;
+package ro.ghionoiu.twitter.context.output;
 
+import ro.ghionoiu.twitter.context.output.StorageOutputChannel;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;

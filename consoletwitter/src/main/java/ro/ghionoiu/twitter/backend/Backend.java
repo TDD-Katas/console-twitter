@@ -4,6 +4,7 @@
  */
 package ro.ghionoiu.twitter.backend;
 
+import ro.ghionoiu.twitter.backend.message.Message;
 import java.util.HashMap;
 import java.util.Map;
 import ro.ghionoiu.twitter.context.ApplicationContext;
@@ -35,13 +36,15 @@ public class Backend {
             storageMap.put(user, userTimeline);
         }
         
-        userTimeline.add(new Message(plainMessage));
+        long currentTime = applicationContext.getClock().currentTimeMillis();
+        userTimeline.add(new Message(currentTime, plainMessage));
     }
     
     public void displayTimelineFor(String user) {
         if (storageMap.containsKey(user)) {
+            long currentTime = applicationContext.getClock().currentTimeMillis();
             Timeline timeline = storageMap.get(user);
-            timeline.displayTo(applicationContext.getOutputChannel());
+            timeline.displayTo(applicationContext.getOutputChannel(), currentTime);
         }
     }
 }

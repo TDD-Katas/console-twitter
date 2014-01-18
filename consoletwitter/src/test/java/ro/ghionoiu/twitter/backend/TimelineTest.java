@@ -4,9 +4,10 @@
  */
 package ro.ghionoiu.twitter.backend;
 
+import ro.ghionoiu.twitter.backend.message.Message;
 import java.util.Arrays;
 import org.junit.Test;
-import ro.ghionoiu.twitter.channels.OutputChannel;
+import ro.ghionoiu.twitter.context.output.OutputChannel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -15,21 +16,26 @@ import static org.mockito.Mockito.verify;
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class TimelineTest {
-    public static final Message SOME_MESSAGE = new Message("message1");
-    public static final Message OTHER_MESSAGE = new Message("message2");
+    public static final long CURRENT_TIME = 2;
     
     @Test
     public void display_will_output_all_messages() {
         Timeline instance = new Timeline();
         Message[] messages = new Message[] { 
-            SOME_MESSAGE, OTHER_MESSAGE };
+            createSomeMessage(), createSomeMessage() };
         instance.addAll(Arrays.asList(messages));
         OutputChannel outputChannel = mock(OutputChannel.class);
         
-        instance.displayTo(outputChannel);
+        instance.displayTo(outputChannel, CURRENT_TIME);
         
         for (Message message : messages) {
-            verify(outputChannel).writeMessage(message.getContent());
+            verify(message).displayTo(outputChannel, CURRENT_TIME);
         }
+    }
+
+    //~~~~~~~ Test helper
+    
+    protected Message createSomeMessage() {
+        return mock(Message.class);
     }
 }

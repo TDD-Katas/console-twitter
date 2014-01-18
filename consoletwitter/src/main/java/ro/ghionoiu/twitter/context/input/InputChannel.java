@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.ghionoiu.twitter.channels;
+package ro.ghionoiu.twitter.context.input;
 
 /**
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
-public interface OutputChannel {
-    void writeMessage(String message);
+public interface InputChannel {
+    String readLine();
 }

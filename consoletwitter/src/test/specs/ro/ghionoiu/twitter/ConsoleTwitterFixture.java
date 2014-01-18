@@ -3,7 +3,6 @@ package ro.ghionoiu.twitter;
 import ro.ghionoiu.twitter.command.CommandDispatcher;
 import org.concordion.integration.junit4.ConcordionRunner;
 import org.junit.runner.RunWith;
-import ro.ghionoiu.twitter.channels.InputChannel;
 import ro.ghionoiu.twitter.channels.input.ArrayBasedInputChannel;
 import ro.ghionoiu.twitter.channels.output.StorageOutputChannel;
 import ro.ghionoiu.twitter.context.ApplicationContext;

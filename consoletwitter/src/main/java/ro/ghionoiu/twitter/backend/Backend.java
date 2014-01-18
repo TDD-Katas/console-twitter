@@ -5,8 +5,6 @@
 package ro.ghionoiu.twitter.backend;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import ro.ghionoiu.twitter.context.ApplicationContext;
 
@@ -16,23 +14,24 @@ import ro.ghionoiu.twitter.context.ApplicationContext;
  */
 public class Backend {
     private ApplicationContext applicationContext;
-    private Map<String,List<String>> storageMap;
+    private Map<String,Timeline> storageMap;
     
     public Backend(ApplicationContext applicationContext) {
-        this(applicationContext, new HashMap<String, List<String>>());
+        this(applicationContext, new HashMap<String, Timeline>());
     }
     
-    protected Backend(ApplicationContext applicationContext, Map<String, List<String>> storageMap) {
+    protected Backend(ApplicationContext applicationContext, 
+            Map<String, Timeline> storageMap) {
         this.applicationContext = applicationContext;
         this.storageMap = storageMap;
     }
     
     public void storeMessageForUser(String user, String message) {
-        List<String> userTimeline;
+        Timeline userTimeline;
         if (storageMap.containsKey(user)) {
             userTimeline = storageMap.get(user);
         } else {
-            userTimeline = new LinkedList<String>();
+            userTimeline = new Timeline();
             storageMap.put(user, userTimeline);
         }
         
@@ -41,10 +40,8 @@ public class Backend {
     
     public void displayTimelineFor(String user) {
         if (storageMap.containsKey(user)) {
-            List<String> messages = storageMap.get(user);
-            for (String message : messages) {
-                applicationContext.getOutputChannel().writeMessage(message);
-            }
+            Timeline timeline = storageMap.get(user);
+            timeline.displayTo(applicationContext.getOutputChannel());
         }
     }
 }

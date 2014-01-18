@@ -4,17 +4,15 @@
  */
 package ro.ghionoiu.twitter.backend;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import ro.ghionoiu.twitter.channels.OutputChannel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.any;
+import ro.ghionoiu.twitter.channels.OutputChannel;
 import ro.ghionoiu.twitter.context.ApplicationContext;
 
 
@@ -23,61 +21,56 @@ import ro.ghionoiu.twitter.context.ApplicationContext;
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class BackendTest {
+    public static final String SOME_MESSAGE = "message";
+    private static final String SOME_USER = "Alice";
+    
     
     @Test
-    public void first_message_for_user_will_be_stored_in_map() {
-        String username = "Alice";
-        String firstMessage = "message1";
-        ApplicationContext applicationContext = mock(ApplicationContext.class);
-        Map<String,List<String>> storageMap = new HashMap<String, List<String>>();
-        Backend instance = new Backend(applicationContext, storageMap);
+    public void first_message_for_user_will_create_its_timeline() {
+        Map<String,Timeline> timelinesOfUsers = new HashMap<String, Timeline>();
+        Backend instance = createInstanceWithGivenTimelineMap(timelinesOfUsers);
         
-        instance.storeMessageForUser(username, firstMessage);
+        instance.storeMessageForUser(SOME_USER, SOME_MESSAGE);
         
         assertThat("Username should have been stored in map",
-                storageMap.containsKey(username),is(true));
-        assertThat("First message should have been found in the user timeline",
-                storageMap.get(username).contains(firstMessage),is(true));
+                timelinesOfUsers.containsKey(SOME_USER),is(true));
     }
     
     @Test
-    public void second_message_will_be_added_to_existing_messages() {
-        String username = "Alice";
-        String secondMessage = "message2";
+    public void message_is_added_to_user_timeline() {
+        Timeline timeline = mock(Timeline.class);
+        Backend instance = createBackendWithPreparedTimeline(timeline, SOME_USER);
+        
+        instance.storeMessageForUser(SOME_USER, SOME_MESSAGE);
+        
+        verify(timeline).add(SOME_MESSAGE);
+    }
+    
+    
+    @Test
+    public void display_command_will_be_forwarded_to_the_users_timeline() {
+        Timeline timeline = mock(Timeline.class);
+        Backend instance = createBackendWithPreparedTimeline(timeline, SOME_USER);
+        
+        instance.displayTimelineFor(SOME_USER);
+        
+        verify(timeline).displayTo(any(OutputChannel.class));
+    }
+
+    //~~~~~~~~~~~ Private helpers 
+    
+    protected Backend createBackendWithPreparedTimeline(Timeline timeline, String user) {
         ApplicationContext applicationContext = mock(ApplicationContext.class);
-        Map<String,List<String>> storageMap = new HashMap<String, List<String>>();
-        List<String> existingMessages = new LinkedList<String>();
-        existingMessages.add("message1");
-        storageMap.put(username, existingMessages);
-        Backend instance = new Backend(applicationContext, storageMap);
-        
-        instance.storeMessageForUser(username, secondMessage);
-        
-        assertThat("Size of list should have increased",
-                storageMap.get(username).size(),is(2));
-        assertThat("Second message should have been found in the user timeline",
-                storageMap.get(username).contains(secondMessage),is(true));
+        Map<String,Timeline> timelinesOfUsers = new HashMap<String, Timeline>();
+        timelinesOfUsers.put(user, timeline);
+        Backend instance = new Backend(applicationContext, timelinesOfUsers);
+        return instance;
     }
-    
-    
-    @Test
-    public void displaying_timeline_for_user_will_send_all_its_messages_to_output_channel() {
-        String username = "Alice";
-        List<String> messages = Arrays.asList(new String[] {
-            "message1",
-            "message2"
-        });
-        OutputChannel outputChannel = mock(OutputChannel.class);
-        ApplicationContext applicationContext = new ApplicationContext(null, outputChannel);
-        Map<String,List<String>> storageMap = new HashMap<String, List<String>>();
-        storageMap.put(username, messages);
+
+    protected Backend createInstanceWithGivenTimelineMap(Map<String, Timeline> storageMap) {
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
         Backend instance = new Backend(applicationContext, storageMap);
-        
-        instance.displayTimelineFor(username);
-        
-        for (String message : messages) {
-            verify(outputChannel).writeMessage(message);
-        }
+        return instance;
     }
     
 }

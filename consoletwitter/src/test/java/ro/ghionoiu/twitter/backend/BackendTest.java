@@ -13,8 +13,8 @@ import static org.hamcrest.CoreMatchers.is;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
+import ro.ghionoiu.twitter.backend.follow.FollowList;
 import ro.ghionoiu.twitter.context.output.OutputChannel;
 import ro.ghionoiu.twitter.context.ApplicationContext;
 import ro.ghionoiu.twitter.context.time.ManualClock;
@@ -27,9 +27,9 @@ import ro.ghionoiu.twitter.context.time.ManualClock;
 public class BackendTest {
     public static final String SOME_PLAIN_MESSAGE = "message";
     private static final String SOME_USER = "Alice";
+    private static final String OTHER_USER = "Bob";
     private static final OutputChannel OUTPUT_CHANNEL = mock(OutputChannel.class);
     private static final long CURRENT_TIME = 3;
-    
     
     @Test
     public void first_message_for_user_will_create_its_timeline() {
@@ -49,32 +49,67 @@ public class BackendTest {
         
         instance.storeMessageForUser(SOME_USER, SOME_PLAIN_MESSAGE);
         
-        verify(timeline).add(new Message(CURRENT_TIME, SOME_PLAIN_MESSAGE));
+        verify(timeline).add(new Message(CURRENT_TIME, SOME_USER, SOME_PLAIN_MESSAGE));
     }
     
     @Test
-    public void display_command_will_be_forwarded_to_the_users_timeline() {
+    public void first_follow_for_user_will_create_its_follow_list() {
+        Map<String,FollowList> followListOfUser = new HashMap<String, FollowList>();
+        Backend instance = createInstanceWithGivenFollowedMap(followListOfUser);
+        
+        instance.oneUserFollowsAnother(SOME_USER, OTHER_USER);
+        
+        assertThat("Username should have been stored in map",
+                followListOfUser.containsKey(SOME_USER),is(true));
+    }
+    
+    @Test
+    public void following_a_user_will_add_him_to_the_user_follow_list() {
+        FollowList followList = mock(FollowList.class);
+        Backend instance = createBackendWithPreparedFollowedList(followList, SOME_USER);
+        
+        instance.oneUserFollowsAnother(SOME_USER, OTHER_USER);
+        
+        verify(followList).add(OTHER_USER);
+    }
+    
+    @Test
+    public void display_timeline_command_will_be_forwarded_to_the_users_timeline() {
         Timeline timeline = mock(Timeline.class);
         Backend instance = createBackendWithPreparedTimeline(timeline, SOME_USER);
         
         instance.displayTimelineFor(SOME_USER);
         
-        verify(timeline).displayTo(OUTPUT_CHANNEL, CURRENT_TIME);
+        verify(timeline).displayAsOwnTo(OUTPUT_CHANNEL, CURRENT_TIME);
     }
-
+    
     //~~~~~~~~~~~ Private helpers 
     
     private Backend createBackendWithPreparedTimeline(Timeline timeline, String user) {
         ApplicationContext applicationContext = createApplicationContext();
         Map<String,Timeline> timelinesOfUsers = new HashMap<String, Timeline>();
         timelinesOfUsers.put(user, timeline);
-        Backend instance = new Backend(applicationContext, timelinesOfUsers);
+        Backend instance = new Backend(applicationContext, timelinesOfUsers, emptyFollowList());
         return instance;
     }
 
-    private Backend createInstanceWithGivenTimelineMap(Map<String, Timeline> storageMap) {
+    private Backend createInstanceWithGivenTimelineMap(Map<String, Timeline> timelinesOfUsers) {
         ApplicationContext applicationContext = createApplicationContext();
-        Backend instance = new Backend(applicationContext, storageMap);
+        Backend instance = new Backend(applicationContext, timelinesOfUsers, emptyFollowList());
+        return instance;
+    }
+    
+    private Backend createBackendWithPreparedFollowedList(FollowList followList, String user) {
+        ApplicationContext applicationContext = createApplicationContext();
+        Map<String,FollowList> followListsOfUsers = new HashMap<String, FollowList>();
+        followListsOfUsers.put(user, followList);
+        Backend instance = new Backend(applicationContext, emptyTimelines(), followListsOfUsers);
+        return instance;
+    }
+    
+    private Backend createInstanceWithGivenFollowedMap(Map<String, FollowList> followListsOfUsers) {
+        ApplicationContext applicationContext = createApplicationContext();
+        Backend instance = new Backend(applicationContext, emptyTimelines(), followListsOfUsers);
         return instance;
     }
 
@@ -87,5 +122,12 @@ public class BackendTest {
         when(applicationContext.getOutputChannel()).thenReturn(OUTPUT_CHANNEL);
         return applicationContext;
     }
+
+    protected HashMap<String, Timeline> emptyTimelines() {
+        return new HashMap<String, Timeline>();
+    }
     
+    protected HashMap<String, FollowList> emptyFollowList() {
+        return new HashMap<String, FollowList>();
+    }
 }

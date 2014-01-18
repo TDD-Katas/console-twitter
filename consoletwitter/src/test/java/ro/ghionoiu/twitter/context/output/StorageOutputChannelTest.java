@@ -4,7 +4,6 @@
  */
 package ro.ghionoiu.twitter.context.output;
 
-import ro.ghionoiu.twitter.context.output.StorageOutputChannel;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
@@ -16,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class StorageOutputChannelTest {
     private static final String SOME_MESSAGE = "message";
     private static final String EMPTY = "";
+    public static final String NEWLINE = "\n";
     
     @Test
     public void will_store_received_messages() {
@@ -23,7 +23,7 @@ public class StorageOutputChannelTest {
         
         instance.writeMessage(SOME_MESSAGE);
         
-        assertThat(instance.getStoredOutput(), is(SOME_MESSAGE));
+        assertThat(instance.getStoredOutput(), is(SOME_MESSAGE+NEWLINE));
     }
     
     @Test

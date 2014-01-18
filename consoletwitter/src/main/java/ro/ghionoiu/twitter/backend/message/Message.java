@@ -13,16 +13,18 @@ import ro.ghionoiu.twitter.context.output.OutputChannel;
 public class Message {
     private final TimeDifferenceFormater timeDifferenceFormater;
     private final long creationTime;
+    private final String owner;
     private final String content;
 
-    public Message(long creationTime, String content) {
-        this(new TimeDifferenceFormater(), creationTime, content);
+    public Message(long creationTime, String owner, String content) {
+        this(new TimeDifferenceFormater(), creationTime, owner, content);
     }
     
     protected Message(TimeDifferenceFormater timeDifferenceFormater,
-            long creationTime, String content) {
+            long creationTime, String owner, String content) {
         this.timeDifferenceFormater = timeDifferenceFormater;
         this.creationTime = creationTime;
+        this.owner = owner;
         this.content = content;
     }
 
@@ -35,12 +37,12 @@ public class Message {
     }
     
     //~~~~~~ Equals
-    
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + (int) (this.creationTime ^ (this.creationTime >>> 32));
-        hash = 43 * hash + (this.content != null ? this.content.hashCode() : 0);
+        hash = 67 * hash + (int) (this.creationTime ^ (this.creationTime >>> 32));
+        hash = 67 * hash + (this.owner != null ? this.owner.hashCode() : 0);
+        hash = 67 * hash + (this.content != null ? this.content.hashCode() : 0);
         return hash;
     }
 
@@ -56,22 +58,30 @@ public class Message {
         if (this.creationTime != other.creationTime) {
             return false;
         }
+        if ((this.owner == null) ? (other.owner != null) : !this.owner.equals(other.owner)) {
+            return false;
+        }
         if ((this.content == null) ? (other.content != null) : !this.content.equals(other.content)) {
             return false;
         }
         return true;
-    }
-
-    //~~~~~~ Displaying message
+    }    
     
+    //~~~~~~ Displaying message
     @Override
     public String toString() {
-        return "Message{" + "creationTime=" + creationTime + ", content=" + content + '}';
+        return "Message{" + "creationTime=" + creationTime + ", owner=" + owner + ", content=" + content + '}';
     }
     
-    public void displayTo(OutputChannel outputChannel, long currentTime) {
+    public void displayAsOwnTo(OutputChannel outputChannel, long currentTime) {
         String timeDifference = timeDifferenceFormater
                 .formatTimeDifference(currentTime - creationTime);
-        outputChannel.writeMessage(content+" "+timeDifference+"\n");
+        outputChannel.writeMessage(content+" "+timeDifference);
+    }
+    
+    public void displayAsWallTo(OutputChannel outputChannel, long currentTime) {
+        String timeDifference = timeDifferenceFormater
+                .formatTimeDifference(currentTime - creationTime);
+        outputChannel.writeMessage(owner+" - "+content+" "+timeDifference);
     }
 }

@@ -17,7 +17,8 @@ import static org.mockito.Mockito.when;
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class MessageTest {
-    public static final String SOME_CONTENT = "content";
+    private static final String SOME_USER = "user";
+    private static final String SOME_CONTENT = "content";
     private static final String TIME_DIFFERENCE = "time";
     public static final int SOME_TIME = 0;
     
@@ -34,9 +35,9 @@ public class MessageTest {
         Message instance = createMessage(SOME_CONTENT);
         OutputChannel outputChannel = mock(OutputChannel.class);
         
-        instance.displayTo(outputChannel, SOME_TIME);
+        instance.displayAsOwnTo(outputChannel, SOME_TIME);
         
-        String expectedMessage = SOME_CONTENT+" "+TIME_DIFFERENCE+"\n";
+        String expectedMessage = SOME_CONTENT+" "+TIME_DIFFERENCE;
         verify(outputChannel).writeMessage(expectedMessage);
     }
 
@@ -47,7 +48,7 @@ public class MessageTest {
                 mock(TimeDifferenceFormater.class);
         when(timeDifferenceFormater.formatTimeDifference(0))
                 .thenReturn(TIME_DIFFERENCE);
-        Message instance = new Message(timeDifferenceFormater, SOME_TIME, content);
+        Message instance = new Message(timeDifferenceFormater, SOME_TIME, SOME_USER, content);
         return instance;
     }
 }

@@ -21,7 +21,7 @@ public class StorageOutputChannel implements OutputChannel {
 
     @Override
     public void writeMessage(String message) {
-        outputBuffer.append(message);
+        outputBuffer.append(message).append("\n");
     }
 
     public String getStoredOutput() {

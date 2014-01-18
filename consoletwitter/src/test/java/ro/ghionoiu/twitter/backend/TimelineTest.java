@@ -28,11 +28,11 @@ public class TimelineTest {
         instance.add(secondMessage);
         OutputChannel outputChannel = mock(OutputChannel.class);
         
-        instance.displayTo(outputChannel, CURRENT_TIME);
+        instance.displayAsOwnTo(outputChannel, CURRENT_TIME);
         
         InOrder inOrder = inOrder(secondMessage, firstMessage);
-        inOrder.verify(secondMessage).displayTo(outputChannel, CURRENT_TIME);
-        inOrder.verify(firstMessage).displayTo(outputChannel, CURRENT_TIME);
+        inOrder.verify(secondMessage).displayAsOwnTo(outputChannel, CURRENT_TIME);
+        inOrder.verify(firstMessage).displayAsOwnTo(outputChannel, CURRENT_TIME);
     }
 
     //~~~~~~~ Test helper

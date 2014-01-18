@@ -16,10 +16,19 @@ import ro.ghionoiu.twitter.context.output.OutputChannel;
  */
 public class Timeline extends LinkedList<Message>{
 
-    public void displayTo(OutputChannel outputChannel, long currentTime) {
+    
+    
+    public void displayAsOwnTo(OutputChannel outputChannel, long currentTime) {
         sortByCreationDate();
         for (Message message : this) {
-            message.displayTo(outputChannel, currentTime);
+            message.displayAsOwnTo(outputChannel, currentTime);
+        }
+    }
+    
+    public void displayAsWallTo(OutputChannel outputChannel, long currentTime) {
+        sortByCreationDate();
+        for (Message message : this) {
+            message.displayAsWallTo(outputChannel, currentTime);
         }
     }
 

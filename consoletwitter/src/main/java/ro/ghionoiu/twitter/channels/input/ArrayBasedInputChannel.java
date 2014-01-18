@@ -15,10 +15,14 @@ import ro.ghionoiu.twitter.channels.InputChannel;
 public class ArrayBasedInputChannel implements InputChannel {
     private Iterator<String> inputIterator;
 
-    public ArrayBasedInputChannel(String... inputs) {
-        inputIterator = Arrays.asList(inputs).iterator();
+    public ArrayBasedInputChannel() {
+        inputIterator = Arrays.asList("").iterator();
     }
 
+    public void setInputs(String... inputs) {
+        inputIterator = Arrays.asList(inputs).iterator();
+    }
+    
     @Override
     public String readLine() {
         if (inputIterator.hasNext()) {

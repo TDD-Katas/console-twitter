@@ -10,13 +10,19 @@ import ro.ghionoiu.twitter.context.ApplicationContext;
 
 @RunWith(ConcordionRunner.class)
 public class ConsoleTwitterFixture {
+    private ArrayBasedInputChannel inputChannel;
     private StorageOutputChannel outputChannel;
+    private ApplicationContext applicationContext;
+    private CommandDispatcher commandDispatcher;
     
     /**
      * Resets all the variables to the empty state
      */
     public void reset() {
+        inputChannel = new ArrayBasedInputChannel();
         outputChannel = new StorageOutputChannel();
+        applicationContext = new ApplicationContext(inputChannel, outputChannel);
+        commandDispatcher = new CommandDispatcher(applicationContext);
     }
     
     /**
@@ -26,11 +32,9 @@ public class ConsoleTwitterFixture {
      * @return 
      */
     public String submitCommand(String time, String command) {
-        InputChannel inputChannel = new ArrayBasedInputChannel(command);
+        inputChannel.setInputs(command);
         outputChannel.reset();
-        ApplicationContext applicationContext = 
-                new ApplicationContext(inputChannel, outputChannel);
-        Server server = new Server(applicationContext);
+        Server server = new Server(applicationContext,commandDispatcher);
         
         //Start server
         server.start();

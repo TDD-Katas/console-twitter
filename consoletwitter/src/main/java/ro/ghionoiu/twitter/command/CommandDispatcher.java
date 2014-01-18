@@ -11,31 +11,26 @@ import ro.ghionoiu.twitter.command.handlers.FollowCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.PostCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.ReadCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.WallCommandHandler;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 /**
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class CommandDispatcher {
-    private OutputChannel outputChannel;
     private Backend backend;
     private CommandHandler[] commandHandlers;
 
     //~~~~~~~ Construct
 
-    public CommandDispatcher() {
-        outputChannel = new SystemConsoleOutput();
-        backend = new Backend(outputChannel);
+    public CommandDispatcher(ApplicationContext applicationContext) {
+        backend = new Backend(applicationContext);
         commandHandlers= new CommandHandler[]{
             new PostCommandHandler(backend),
             new FollowCommandHandler(),
             new WallCommandHandler(),
             new ReadCommandHandler(backend)
         };
-    }
-
-    public void setOutputChannel(OutputChannel outputChannel) {
-        this.outputChannel = outputChannel;
     }
 
     public void setCommandHandlers(CommandHandler[] commandHandlers) {
@@ -55,7 +50,5 @@ public class CommandDispatcher {
                 break;
             }
         }
-        
-        outputChannel.writeMessage(command);
     }
 }

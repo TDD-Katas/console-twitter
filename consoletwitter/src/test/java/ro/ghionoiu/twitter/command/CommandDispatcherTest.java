@@ -5,12 +5,15 @@
 package ro.ghionoiu.twitter.command;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import ro.ghionoiu.twitter.channels.OutputChannel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
+import ro.ghionoiu.twitter.channels.InputChannel;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 /**
  *
@@ -51,17 +54,6 @@ public class CommandDispatcherTest {
         verify(secondHandler,never()).processCommand(SOME_COMMAND);
     }
     
-    @Test
-    public void sends_command_to_output_channel() {
-        OutputChannel outputChannel = mock(OutputChannel.class);
-        CommandDispatcher instance = new CommandDispatcher();
-        instance.setOutputChannel(outputChannel);
-        
-        instance.processCommand(SOME_COMMAND);
-        
-        verify(outputChannel).writeMessage(SOME_COMMAND);
-    }
-    
     //~~~~~~ Test helpers
 
     protected CommandHandler capableHandler() {
@@ -80,8 +72,9 @@ public class CommandDispatcherTest {
     }
 
     protected CommandDispatcher createDispatcher(CommandHandler ... handlers) {
-        CommandDispatcher instance = new CommandDispatcher();
-        instance.setOutputChannel(mock(OutputChannel.class));
+        ApplicationContext applicationContext = 
+                mock(ApplicationContext.class, Mockito.RETURNS_MOCKS);
+        CommandDispatcher instance = new CommandDispatcher(applicationContext);
         instance.setCommandHandlers(handlers);
         return instance;
     }

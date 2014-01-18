@@ -1,30 +1,34 @@
 package ro.ghionoiu.twitter;
 
 import ro.ghionoiu.twitter.command.CommandDispatcher;
-import ro.ghionoiu.twitter.channels.InputChannel;
 import ro.ghionoiu.twitter.channels.input.SystemConsoleInput;
+import ro.ghionoiu.twitter.channels.output.SystemConsoleOutput;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 /**
  * Hello world!
  *
  */
 public class Server {
-    private InputChannel inputChannnel;
+    private ApplicationContext applicationContext;
     private CommandDispatcher commandDispatcher;
     
     //~~~~~~~ Construct
     
     public Server() {
-        inputChannnel = new SystemConsoleInput();
-        commandDispatcher = new CommandDispatcher();
+        this(new ApplicationContext(
+                new SystemConsoleInput(), 
+                new SystemConsoleOutput()));
+    }
+    
+    public Server(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+        this.commandDispatcher = new CommandDispatcher(applicationContext);
     }
 
-    public void setInputChannnel(InputChannel inputChannnel) {
-        this.inputChannnel = inputChannnel;
-    }
-
-    public void setEngine(CommandDispatcher engine) {
-        this.commandDispatcher = engine;
+    public Server(ApplicationContext applicationContext, CommandDispatcher commandDispatcher) {
+        this.applicationContext = applicationContext;
+        this.commandDispatcher = commandDispatcher;
     }
 
     //~~~~~~~ Run
@@ -32,7 +36,7 @@ public class Server {
     public void start() {
         String command;
         do {
-            command = inputChannnel.readLine();
+            command = applicationContext.getInputChannnel().readLine();
             if (command != null) {
                 commandDispatcher.processCommand(command);
             } else {

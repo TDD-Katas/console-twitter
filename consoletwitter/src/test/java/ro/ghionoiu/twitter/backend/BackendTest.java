@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import ro.ghionoiu.twitter.channels.OutputChannel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 
 /**
@@ -27,9 +28,9 @@ public class BackendTest {
     public void first_message_for_user_will_be_stored_in_map() {
         String username = "Alice";
         String firstMessage = "message1";
-        OutputChannel outputChannel = mock(OutputChannel.class);
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
         Map<String,List<String>> storageMap = new HashMap<String, List<String>>();
-        Backend instance = new Backend(outputChannel, storageMap);
+        Backend instance = new Backend(applicationContext, storageMap);
         
         instance.storeMessageForUser(username, firstMessage);
         
@@ -43,12 +44,12 @@ public class BackendTest {
     public void second_message_will_be_added_to_existing_messages() {
         String username = "Alice";
         String secondMessage = "message2";
-        OutputChannel outputChannel = mock(OutputChannel.class);
+        ApplicationContext applicationContext = mock(ApplicationContext.class);
         Map<String,List<String>> storageMap = new HashMap<String, List<String>>();
         List<String> existingMessages = new LinkedList<String>();
         existingMessages.add("message1");
         storageMap.put(username, existingMessages);
-        Backend instance = new Backend(outputChannel, storageMap);
+        Backend instance = new Backend(applicationContext, storageMap);
         
         instance.storeMessageForUser(username, secondMessage);
         
@@ -67,9 +68,10 @@ public class BackendTest {
             "message2"
         });
         OutputChannel outputChannel = mock(OutputChannel.class);
+        ApplicationContext applicationContext = new ApplicationContext(null, outputChannel);
         Map<String,List<String>> storageMap = new HashMap<String, List<String>>();
         storageMap.put(username, messages);
-        Backend instance = new Backend(outputChannel, storageMap);
+        Backend instance = new Backend(applicationContext, storageMap);
         
         instance.displayTimelineFor(username);
         

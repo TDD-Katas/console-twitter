@@ -8,22 +8,22 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import ro.ghionoiu.twitter.channels.OutputChannel;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 /**
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class Backend {
+    private ApplicationContext applicationContext;
     private Map<String,List<String>> storageMap;
-    private OutputChannel outputChannel;
     
-    public Backend(OutputChannel outputChannel) {
-        this(outputChannel, new HashMap<String, List<String>>());
+    public Backend(ApplicationContext applicationContext) {
+        this(applicationContext, new HashMap<String, List<String>>());
     }
     
-    protected Backend(OutputChannel outputChannel, Map<String, List<String>> storageMap) {
-        this.outputChannel = outputChannel;
+    protected Backend(ApplicationContext applicationContext, Map<String, List<String>> storageMap) {
+        this.applicationContext = applicationContext;
         this.storageMap = storageMap;
     }
     
@@ -43,7 +43,7 @@ public class Backend {
         if (storageMap.containsKey(user)) {
             List<String> messages = storageMap.get(user);
             for (String message : messages) {
-                outputChannel.writeMessage(message);
+                applicationContext.getOutputChannel().writeMessage(message);
             }
         }
     }

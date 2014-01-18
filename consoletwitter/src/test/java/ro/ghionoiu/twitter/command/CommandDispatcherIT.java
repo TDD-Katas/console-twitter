@@ -9,15 +9,16 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.any;
-import ro.ghionoiu.twitter.channels.OutputChannel;
 import ro.ghionoiu.twitter.command.handlers.FollowCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.PostCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.ReadCommandHandler;
 import ro.ghionoiu.twitter.command.handlers.WallCommandHandler;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 
 /**
@@ -30,8 +31,9 @@ public class CommandDispatcherIT {
     
     @Before
     public void setUp() {
-        instance = new CommandDispatcher();
-        instance.setOutputChannel(mock(OutputChannel.class));
+        ApplicationContext applicationContext = 
+                mock(ApplicationContext.class, Mockito.RETURNS_MOCKS);
+        instance = new CommandDispatcher(applicationContext);
         spyMap = createSpyMapFor(instance);
     }
     

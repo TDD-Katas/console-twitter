@@ -6,10 +6,10 @@ import org.junit.runner.RunWith;
 import ro.ghionoiu.twitter.channels.InputChannel;
 import ro.ghionoiu.twitter.channels.input.ArrayBasedInputChannel;
 import ro.ghionoiu.twitter.channels.output.StorageOutputChannel;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 @RunWith(ConcordionRunner.class)
 public class ConsoleTwitterFixture {
-    private CommandDispatcher dispatcher;
     private StorageOutputChannel outputChannel;
     
     /**
@@ -17,8 +17,6 @@ public class ConsoleTwitterFixture {
      */
     public void reset() {
         outputChannel = new StorageOutputChannel();
-        dispatcher = new CommandDispatcher();
-        dispatcher.setOutputChannel(outputChannel);
     }
     
     /**
@@ -30,9 +28,9 @@ public class ConsoleTwitterFixture {
     public String submitCommand(String time, String command) {
         InputChannel inputChannel = new ArrayBasedInputChannel(command);
         outputChannel.reset();
-        Server server = new Server();
-        server.setInputChannnel(inputChannel);
-        server.setEngine(dispatcher);
+        ApplicationContext applicationContext = 
+                new ApplicationContext(inputChannel, outputChannel);
+        Server server = new Server(applicationContext);
         
         //Start server
         server.start();

@@ -12,6 +12,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import ro.ghionoiu.twitter.channels.OutputChannel;
+import ro.ghionoiu.twitter.context.ApplicationContext;
 
 /**
  *
@@ -65,10 +67,10 @@ public class ServerTest {
         startServerUsing(mockInputChannel, mock(CommandDispatcher.class));
     }
     
-    private void startServerUsing(InputChannel mockInputChannel, CommandDispatcher engine) {
-        Server consoleTwitter = new Server();
-        consoleTwitter.setInputChannnel(mockInputChannel);
-        consoleTwitter.setEngine(engine);
+    private void startServerUsing(InputChannel mockInputChannel, CommandDispatcher dispatcher) {
+        ApplicationContext applicationContext = 
+                new ApplicationContext(mockInputChannel, mock(OutputChannel.class));
+        Server consoleTwitter = new Server(applicationContext, dispatcher);
         consoleTwitter.start();
     }
 }

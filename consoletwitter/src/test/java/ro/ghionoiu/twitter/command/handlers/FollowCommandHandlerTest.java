@@ -8,6 +8,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.junit.Before;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import ro.ghionoiu.twitter.backend.Backend;
 import ro.ghionoiu.twitter.command.CommandHandler;
 
 /**
@@ -15,11 +18,13 @@ import ro.ghionoiu.twitter.command.CommandHandler;
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
 public class FollowCommandHandlerTest {
+    private Backend backend;
     private CommandHandler instance;
     
     @Before
     public void setUp() {
-        instance = new FollowCommandHandler();
+        backend = mock(Backend.class);
+        instance = new FollowCommandHandler(backend);
     }
     
     @Test
@@ -36,5 +41,14 @@ public class FollowCommandHandlerTest {
         boolean canHandle = instance.canHandle("Alice");
         
         assertThat(canHandle, is(false));
+    }
+    
+    @Test
+    public void notifies_backend_that_a_user_is_following_the_other() {
+        String command = "Alice follows Bob";
+        
+        instance.processCommand(command);
+        
+        verify(backend).oneUserFollowsAnother("Alice", "Bob");
     }
 }

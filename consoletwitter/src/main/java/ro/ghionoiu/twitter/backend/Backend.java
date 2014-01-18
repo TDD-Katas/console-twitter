@@ -27,6 +27,8 @@ public class Backend {
         this.storageMap = storageMap;
     }
     
+    //~~~~~~~~ Public methods
+    
     public void storeMessageForUser(String user, String plainMessage) {
         Timeline userTimeline;
         if (storageMap.containsKey(user)) {
@@ -40,11 +42,19 @@ public class Backend {
         userTimeline.add(new Message(currentTime, plainMessage));
     }
     
+    public void oneUserFollowsAnother(String user, String followedUser) {
+        
+    }
+    
+    
     public void displayTimelineFor(String user) {
         if (storageMap.containsKey(user)) {
             long currentTime = applicationContext.getClock().currentTimeMillis();
             Timeline timeline = storageMap.get(user);
             timeline.displayTo(applicationContext.getOutputChannel(), currentTime);
         }
+    }
+    
+    public void displayWallFor(String user) {
     }
 }

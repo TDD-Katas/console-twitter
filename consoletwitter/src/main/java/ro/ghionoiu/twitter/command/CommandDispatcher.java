@@ -25,8 +25,8 @@ public class CommandDispatcher {
         backend = new Backend(applicationContext);
         commandHandlers= new CommandHandler[]{
             new PostCommandHandler(backend),
-            new FollowCommandHandler(),
-            new WallCommandHandler(),
+            new FollowCommandHandler(backend),
+            new WallCommandHandler(backend),
             new ReadCommandHandler(backend)
         };
     }

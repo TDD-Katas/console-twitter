@@ -46,7 +46,6 @@ public class BackendTest {
         verify(timeline).add(SOME_MESSAGE);
     }
     
-    
     @Test
     public void display_command_will_be_forwarded_to_the_users_timeline() {
         Timeline timeline = mock(Timeline.class);

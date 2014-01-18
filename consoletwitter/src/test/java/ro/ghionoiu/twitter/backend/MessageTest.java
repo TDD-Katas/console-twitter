@@ -5,6 +5,7 @@
 package ro.ghionoiu.twitter.backend;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 /**
@@ -15,6 +16,8 @@ public class MessageTest {
     
     @Test
     public void equals_should_respect_contract() {
-        EqualsVerifier.forClass(Message.class).verify();
+        EqualsVerifier.forClass(Message.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 }

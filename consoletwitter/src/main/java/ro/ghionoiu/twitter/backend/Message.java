@@ -8,7 +8,7 @@ package ro.ghionoiu.twitter.backend;
  *
  * @author Iulian Ghionoiu <iulian.ghionoiu@exenne.ro>
  */
-public final class Message {
+public class Message {
     private final String content;
 
     public Message(String content) {
@@ -32,7 +32,7 @@ public final class Message {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Message)) {
             return false;
         }
         final Message other = (Message) obj;

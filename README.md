@@ -25,8 +25,8 @@ Example:
 
 | Time (sec)  | Command                                   | Expected Output                           |
 | ----------- | ----------------------------------------- | ----------------------------------------- |
-| 0           | `Alice -> I love the weather today`       |                                           |
-| 300         | `Alice`                                   | I love the weather today (5 minutes ago)  |
+| 0           | Alice -> I love the weather today         |                                           |
+| 300         | Alice                                     | I love the weather today (5 minutes ago)  |
 
 
 <h3>2. Reading messages from others</h3>
@@ -37,11 +37,11 @@ Example:
 
 | Time (sec)  | Command                                  | Expected Output                                      |
 | ----------- | ---------------------------------------- | ---------------------------------------------------- |
-| 0           | `Alice -> I love the weather today`      |                                                      |
-| 180         | `Bob -> Damn! We lost!`                  |                                                      |
-| 240         | `Bob -> Good game though.`               |                                                      |
-| 300         | `Alice`                                  | I love the weather today (5 minutes ago)             |
-| 300         | `Bob`                                    | Bob -> Damn! We lost! <br/> Bob -> Good game though. |
+| 0           | Alice -> I love the weather today        |                                                      |
+| 180         | Bob -> Damn! We lost!                    |                                                      |
+| 240         | Bob -> Good game though.                 |                                                      |
+| 300         | Alice`                                   | I love the weather today (5 minutes ago)             |
+| 300         | Bob                                      | Bob -> Damn! We lost! <br/> Bob -> Good game though. |
 
 <h3>3. Following</h3>
 
@@ -51,17 +51,14 @@ Example:
 
 | Time (sec)  | Command                                  | Expected Output                                      |
 | ----------- | ---------------------------------------- | ---------------------------------------------------- |
-| 0           | `Alice -> I love the weather today`      |                                                      |
-| 180         | `Bob -> Damn! We lost!`                  |                                                      |
-| 240         | `Bob -> Good game though.`               |                                                      |
-| 298         | `Charlie -> I'm in New York today! Anyone wants to have a coffee?` |                            |
-| 299         | `Charlie follows Alice`                  |                                                      |
-| 300         | `Charlie wall`                           | 
-Charlie - I'm in New York today! Anyone wants to have a coffee? (2 seconds ago) <br/>
-Alice - I love the weather today (5 minutes ago) |
-| 312         | `Charlie follows Bob`                  |                                                      |
-| 313         | `Charlie wall`                           | 
-Charlie - I'm in New York today! Anyone wants to have a coffee? (15 seconds ago) <br/>
-Bob - Good game though. (1 minutes ago)<br/>
-Bob - Damn! We lost! (2 minutes ago)<br/>
-Alice - I love the weather today (5 minutes ago) |
+| 0           | Alice -> I love the weather today      |                                                      |
+| 180         | Bob -> Damn! We lost!                  |                                                      |
+| 240         | Bob -> Good game though.               |                                                      |
+| 298         | Charlie -> I'm in New York today! Anyone wants to have a coffee?` |                            |
+| 299         | Charlie follows Alice                  |                                                      |
+| 300         | Charlie wall                           | Charlie - I'm in New York today! Anyone wants to have a coffee? (2 seconds ago) <br/> Alice - I love the weather today (5 minutes ago) |
+| 312         | Charlie follows Bob                  |                                                      |
+| 313         | Charlie wall                           | Charlie - I'm in New York today! Anyone wants to have a coffee? (15 seconds ago) <br/>Bob - Good game though. (1 minutes ago)<br/>Bob - Damn! We lost! (2 minutes ago)<br/>Alice - I love the weather today (5 minutes ago) |
+
+
+
